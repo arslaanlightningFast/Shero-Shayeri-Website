@@ -1,0 +1,10 @@
+# OS / Editor
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Optional: VS Code settings (uncomment if you don't want to commit them)
+# .vscode/
+

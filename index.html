@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sher-o-Shayari</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600&family=Noto+Sans:wght@300;400;600&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="top">
+        <h1 class="title">Sher-o-Shayari</h1>
+        <p class="subtitle">Love, Sadness, and Motivation in beautiful words.</p>
+      </header>
+
+      <nav class="top-nav" aria-label="Primary navigation">
+        <a class="nav-link" href="./famous.html">Famous Shayars</a>
+      </nav>
+
+      <section class="controls" aria-label="Shayari controls">
+        <div class="filters" role="group" aria-label="Category filter">
+          <button class="filter-btn is-active" type="button" data-category="All">
+            All
+          </button>
+          <button class="filter-btn" type="button" data-category="Love">Love</button>
+          <button class="filter-btn" type="button" data-category="Sad">Sad</button>
+          <button class="filter-btn" type="button" data-category="Motivation">
+            Motivation
+          </button>
+        </div>
+
+        <div class="search-wrap">
+          <label class="search-label" for="searchInput">Search</label>
+          <input
+            id="searchInput"
+            class="search"
+            type="search"
+            placeholder="Search shayari..."
+            autocomplete="off"
+          />
+        </div>
+      </section>
+
+      <p id="emptyState" class="empty-state" hidden>No shayari found. Try another search.</p>
+
+      <main id="shayariGrid" class="grid" aria-live="polite"></main>
+
+      <footer class="footer">
+        <span>Tip: Use Copy to save shayari text.</span>
+      </footer>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
+
