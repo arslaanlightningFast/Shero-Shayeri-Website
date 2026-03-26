@@ -4,7 +4,7 @@
    - Keeps caches versioned so updates replace old files safely
 */
 
-const VERSION = "2026-03-26-01";
+const VERSION = "2026-03-26-02";
 const CACHE_STATIC = `sher-static-${VERSION}`;
 const CACHE_RUNTIME = `sher-runtime-${VERSION}`;
 
@@ -54,13 +54,32 @@ self.addEventListener("fetch", (event) => {
   // Only cache same-origin resources (prevents caching third-party images).
   if (url.origin !== self.location.origin) return;
 
+  // For HTML, always do network-first so we don't get stuck with older cached pages.
+  const accept = req.headers.get("accept") || "";
+  const isHtml = accept.includes("text/html");
+
+  if (isHtml) {
+    event.respondWith(
+      fetch(req)
+        .then((res) => {
+          if (!res || res.status !== 200) return res;
+
+          const shouldCache = res.type === "basic";
+          if (shouldCache) {
+            const copy = res.clone();
+            caches.open(CACHE_RUNTIME).then((cache) => cache.put(req, copy));
+          }
+
+          return res;
+        })
+        .catch(() => caches.match(req).then((cached) => cached))
+    );
+    return;
+  }
+
   event.respondWith(
     caches.match(req).then((cached) => {
       if (cached) return cached;
-
-      // Network-first for HTML so navigation keeps up with latest content.
-      const accept = req.headers.get("accept") || "";
-      const isHtml = accept.includes("text/html");
 
       const fetchPromise = fetch(req)
         .then((res) => {
